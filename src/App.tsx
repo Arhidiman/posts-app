@@ -1,12 +1,10 @@
-import {MainPage} from "@/pages/MainPage";
+import {AppRouter} from "@/app/router/AppRouter.tsx";
 import './App.css'
 
 function App() {
 
   return (
-    <MainPage>
-
-    </MainPage>
+    <AppRouter/>
   )
 }
 
