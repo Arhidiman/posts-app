@@ -1,10 +1,12 @@
 import {AppRouter} from "@/app/router/AppRouter.tsx";
+import {ReduxProvider} from "@/app/providers";
 import './App.css'
 
 function App() {
-
   return (
-    <AppRouter/>
+      <ReduxProvider>
+        <AppRouter/>
+      </ReduxProvider>
   )
 }
 

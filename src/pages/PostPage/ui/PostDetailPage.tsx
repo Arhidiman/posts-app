@@ -12,7 +12,7 @@ export const PostDetailPage: React.FC = () => {
             <h2>Детали поста номер {id}</h2>
             <Post
                 _id={1}
-                postNum={1}
+                postNum={id}
                 title={'mock'}
                 text={'mock'}
             />

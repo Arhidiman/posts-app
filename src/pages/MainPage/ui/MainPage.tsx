@@ -1,5 +1,7 @@
 import React from "react"
 import {Post} from "@/entities/Post";
+import {useSelector} from "react-redux";
+import type {RootState} from "@/app/store";
 import './MainPage.scss'
 
 interface IMainPage {
@@ -13,29 +15,9 @@ interface IPost {
     text: string
 }
 
-const mockData = [
-    {
-        _id: 1,
-        postNum: 1,
-        title: 'title 1',
-        text: 'text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 text 1 ',
-    },
-    {
-        _id: 2,
-        postNum: 2,
-        title: 'title 2',
-        text: 'text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 text 2 ',
-    },
-    {
-        _id: 3,
-        postNum: 3,
-        title: 'title 3',
-        text: 'text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3 text 3',
-    }
-]
-
 export const MainPage: React.FC<IMainPage> = () => {
 
+    const {posts} = useSelector((state: RootState) => state)
     const post = (data: IPost) => {
         return <Post
             key={data._id}
@@ -49,7 +31,7 @@ export const MainPage: React.FC<IMainPage> = () => {
     return (
        <div className='main-page'>
            <div className='main-page-posts'>
-               {mockData && mockData.map(post)}
+               {posts.posts && posts.posts.map(post)}
            </div>
        </div>
     );
