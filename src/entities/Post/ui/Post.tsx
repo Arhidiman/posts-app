@@ -1,27 +1,22 @@
 
 import {Button} from "@/shared/ui/Button/Button.tsx";
 import { Link } from 'react-router-dom';
+import type {IPost} from "@/shared/types/types.ts";
 import './Post.scss'
 
-interface IPost {
-    _id: string | number,
-    postNum: number,
-    title: string,
-    text: string
-}
 
-export const Post = ({_id, postNum, title, text}: IPost) => {
+export const Post = ({id, postNum, title, body}: IPost) => {
     return (
-        <div key={_id} className='post'>
+        <div key={id} className='post'>
             <div className='post-content'>
                 <div className='post-content-info'>
                     <span className='post-num'>{postNum}</span>
                     <h3 className='post-title'>{title}</h3>
                 </div>
-                <p className='post-text'>{text}</p>
+                <p className='post-text'>{body}</p>
             </div>
             <Button>
-                <Link to={`/posts/${_id}`}>
+                <Link to={`/posts/${id}`}>
                     Просмотр
                 </Link>
             </Button>
