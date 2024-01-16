@@ -1,5 +1,6 @@
 
 import {Button} from "@/shared/ui/Button/Button.tsx";
+import { Link } from 'react-router-dom';
 import './Post.scss'
 
 interface IPost {
@@ -19,8 +20,11 @@ export const Post = ({_id, postNum, title, text}: IPost) => {
                 </div>
                 <p className='post-text'>{text}</p>
             </div>
-
-            <Button>Просмотр</Button>
+            <Button>
+                <Link to={`/posts/${_id}`}>
+                    Просмотр
+                </Link>
+            </Button>
         </div>
     )
 }
