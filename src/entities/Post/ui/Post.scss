@@ -1,0 +1,32 @@
+
+.post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding: 10px;
+  min-width: 600px;
+  border: solid deepskyblue 2px;
+  border-radius: 5px;
+  &-content {
+    &-info {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+  }
+  &-num {
+    font-size: 20px;
+  }
+  &-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  &-text {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+  }
+}
