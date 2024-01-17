@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useGetAllPostsQuery} from "@/pages/MainPage/api/postsApi.ts";
+import {useGetAllPostsQuery} from "@/shared/api/queries/postsApi.ts";
 import {InfiniteScrollList} from "@/featutes/InfiniteScrollList";
 import './MainPage.scss'
 

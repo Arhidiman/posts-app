@@ -1,16 +1,16 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import type {IPost} from "@/shared/types/types.ts";
 
-interface IPostsState {
+interface IInfiniteScroll {
     posts: IPost[] | undefined
 }
 
-const initialState: IPostsState = {
+const initialState: IInfiniteScroll = {
     posts: []
 }
 
-const postsSlice = createSlice({
-    name: "posts",
+const infiniteScrollPosts = createSlice({
+    name: "infiniteScrollPosts",
     initialState: initialState,
     reducers: {
         setPosts: (state, action: PayloadAction<IPost[] | undefined>) => {
@@ -19,5 +19,5 @@ const postsSlice = createSlice({
     }
 })
 
-export const {setPosts} = postsSlice.actions
-export default postsSlice.reducer
+export const {setPosts} = infiniteScrollPosts.actions
+export default infiniteScrollPosts.reducer

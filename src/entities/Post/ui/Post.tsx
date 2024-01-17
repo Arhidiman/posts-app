@@ -7,11 +7,11 @@ import './Post.scss'
 
 export const Post = ({id, postNum, title, body, detailed}: IPost & {detailed: boolean}) => {
 
-    const postBodyClassname = `post-body ${!detailed ? 'detailed' : ''}`
+    const postBodyClassname = `post-body ${detailed ? 'detailed' : ''}`
 
     const button = () => {
         return (
-            detailed &&
+            !detailed &&
             <Button>
                 <Link to={`/posts/${id}`}>
                     Просмотр

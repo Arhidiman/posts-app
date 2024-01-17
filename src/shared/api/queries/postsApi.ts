@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {BASE_URL} from "@/shared/api/constants/urls.ts";
 import type {IPost} from "@/shared/types/types.ts";
-
-const BASE_URL = 'https://jsonplaceholder.typicode.com'
 
 export const postsApi = createApi({
     reducerPath: 'postsApi',
@@ -10,7 +9,13 @@ export const postsApi = createApi({
         getAllPosts: builder.query<IPost[], string>({
             query: () => `/posts`,
         }),
+        getSinglePost: builder.query<IPost, number | undefined>({
+            query: (id: number | undefined) => `/posts/${id}`,
+        }),
     }),
 })
 
-export const { useGetAllPostsQuery } = postsApi
+export const {
+    useGetAllPostsQuery,
+    useGetSinglePostQuery
+} = postsApi

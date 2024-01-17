@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Post} from "@/entities/Post";
 import {useSelector, useDispatch} from "react-redux";
-import {useGetAllPostsQuery} from "@/pages/MainPage/api/postsApi.ts";
-import {setPosts} from "@/pages/MainPage/store";
+import {useGetAllPostsQuery} from "@/shared/api/queries/postsApi.ts";
+import {setPosts} from "@/featutes/InfiniteScrollList/store";
 import type {IPost} from "@/shared/types/types.ts";
 import type {RootState} from "@/app/store";
 
@@ -12,14 +12,14 @@ export const InfiniteScrollList: React.FC = () => {
     const [loading, setLoading] = useState(false)
     const [initialPosts] = useState(6)
     const [addPostsWhileScrolling] = useState(1)
-    const {posts} = useSelector((state: RootState) => state)
+    const {infiniteScrollPosts} = useSelector((state: RootState) => state)
     const {data} = useGetAllPostsQuery('')
     const containerRef = useRef<HTMLDivElement>(null)
 
     const fetchMoreData = () => {
         let newItems: IPost[] | undefined = undefined
-        if(data && posts.posts) {
-            newItems =  data.slice(0, posts.posts.length + addPostsWhileScrolling)
+        if(data && infiniteScrollPosts.posts) {
+            newItems =  data.slice(0, infiniteScrollPosts.posts.length + addPostsWhileScrolling)
         }
         dispatch(setPosts(newItems))
         setLoading(false);
@@ -53,7 +53,7 @@ export const InfiniteScrollList: React.FC = () => {
             postNum={i + 1}
             title={post.title}
             body={post.body}
-            detailed
+            detailed={false}
         />
     }
 
@@ -70,7 +70,7 @@ export const InfiniteScrollList: React.FC = () => {
             onScroll={handleScroll}
         >
             <div style={{ position: 'absolute', width: '100%' }}>
-                {posts.posts && posts.posts.map(post)}
+                {infiniteScrollPosts.posts && infiniteScrollPosts.posts.map(post)}
                 {loading && <div>Loading...</div>}
             </div>
         </div>

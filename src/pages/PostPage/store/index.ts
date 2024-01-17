@@ -1,16 +1,16 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import type {IPost} from "@/shared/types/types.ts";
 
-interface IPostsState {
+interface IPostsPage {
     post: IPost |  undefined
 }
 
-const initialState: IPostsState = {
+const initialState: IPostsPage = {
     post: undefined
 }
 
-const singlePostSlice = createSlice({
-    name: "singlePost",
+const postPageSlice = createSlice({
+    name: "postPage",
     initialState: initialState,
     reducers: {
         setPost: (state, action: PayloadAction<IPost | undefined>) => {
@@ -20,5 +20,5 @@ const singlePostSlice = createSlice({
     }
 })
 
-export const {setPost} = singlePostSlice.actions
-export default singlePostSlice.reducer
+export const {setPost} = postPageSlice.actions
+export default postPageSlice.reducer
