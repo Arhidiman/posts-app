@@ -30,6 +30,7 @@ export const PostDetailPage: React.FC = () => {
                 singlePost.post &&
                 <Post
                     id={singlePost.post.id}
+                    detailed
                     postNum={singlePost.post.id}
                     title={singlePost.post.title}
                     body={singlePost.post.body}

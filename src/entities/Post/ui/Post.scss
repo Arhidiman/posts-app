@@ -23,10 +23,16 @@
     font-size: 20px;
     font-weight: bold;
   }
-  &-text {
+  &-body {
     width: 300px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
+    &.detailed {
+      white-space: normal;
+      overflow: auto;
+      width: 85%;
+      text-align: left;
+    }
   }
 }

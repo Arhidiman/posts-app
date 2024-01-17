@@ -19,10 +19,8 @@ export const MainPage: React.FC<IMainPage> = () => {
 
     useEffect(() => {
         dispatch(setPosts(data))
-    }, [data]);
-    // const state = useSelector((state: RootState) => state)
+    },[data]);
 
-    // console.log(state)
     const post = (post: IPost, i: number) => {
         return <Post
             key={post.id}
@@ -30,6 +28,7 @@ export const MainPage: React.FC<IMainPage> = () => {
             postNum={i + 1}
             title={post.title}
             body={post.body}
+            detailed
         />
     }
 

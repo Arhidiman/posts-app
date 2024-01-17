@@ -5,21 +5,38 @@ import type {IPost} from "@/shared/types/types.ts";
 import './Post.scss'
 
 
-export const Post = ({id, postNum, title, body}: IPost) => {
-    return (
-        <div key={id} className='post'>
-            <div className='post-content'>
-                <div className='post-content-info'>
-                    <span className='post-num'>{postNum}</span>
-                    <h3 className='post-title'>{title}</h3>
-                </div>
-                <p className='post-text'>{body}</p>
-            </div>
+export const Post = ({id, postNum, title, body, detailed}: IPost & {detailed: boolean}) => {
+
+    const postBodyClassname = `post-body ${!detailed ? 'detailed' : ''}`
+
+    const button = () => {
+        return (
+            detailed &&
             <Button>
                 <Link to={`/posts/${id}`}>
                     Просмотр
                 </Link>
             </Button>
+        )
+    }
+
+    const content = () => {
+        return (
+            <div className='post-content'>
+                <div className='post-content-info'>
+                    <span className='post-num'>{postNum}</span>
+                    <h3 className='post-title'>{title}</h3>
+                </div>
+                <p className={postBodyClassname}>{body}</p>
+            </div>
+        )
+    }
+
+    return (
+        <div key={id} className='post'>
+            {
+                [content(), button()]
+            }
         </div>
     )
 }
