@@ -11,8 +11,6 @@ interface IMainPage {
 
 }
 
-
-
 export const MainPage: React.FC<IMainPage> = () => {
 
     const {posts} = useSelector((state: RootState) => state)
