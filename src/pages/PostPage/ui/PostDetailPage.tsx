@@ -21,8 +21,6 @@ export const PostDetailPage: React.FC = () => {
         dispatch(setPost(data))
     }, [data]);
 
-    const state = useSelector((state: RootState) => state)
-    console.log("full state", state)
     return (
         <>
             <h2>Детали поста номер {id}</h2>
