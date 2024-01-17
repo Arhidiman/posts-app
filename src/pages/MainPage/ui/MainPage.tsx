@@ -15,13 +15,14 @@ export const MainPage: React.FC<IMainPage> = () => {
 
     const {posts} = useSelector((state: RootState) => state)
     const dispatch = useDispatch()
-    const {data} = useGetAllPostsQuery()
+    const {data} = useGetAllPostsQuery('')
 
     useEffect(() => {
         dispatch(setPosts(data))
     }, [data]);
+    // const state = useSelector((state: RootState) => state)
 
-    console.log(posts)
+    // console.log(state)
     const post = (post: IPost, i: number) => {
         return <Post
             key={post.id}
