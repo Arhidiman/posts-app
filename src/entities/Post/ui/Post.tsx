@@ -5,7 +5,7 @@ import type {IPost} from "@/shared/types/types.ts";
 import './Post.scss'
 
 
-export const Post = ({id, postNum, title, body, detailed}: IPost & {detailed: boolean}) => {
+export const Post = ({id, title, body, detailed, height}: IPost & {detailed: boolean, height: number}) => {
 
     const postBodyClassname = `post-body ${detailed ? 'detailed' : ''}`
 
@@ -22,9 +22,9 @@ export const Post = ({id, postNum, title, body, detailed}: IPost & {detailed: bo
 
     const content = () => {
         return (
-            <div className='post-content'>
+            <div className='post-content' style={{height: height}}>
                 <div className='post-content-info'>
-                    <span className='post-num'>{postNum}</span>
+                    <span className='post-num'>{id}</span>
                     <h3 className='post-title'>{title}</h3>
                 </div>
                 <p className={postBodyClassname}>{body}</p>
@@ -34,9 +34,8 @@ export const Post = ({id, postNum, title, body, detailed}: IPost & {detailed: bo
 
     return (
         <div key={id} className='post'>
-            {
-                [content(), button()]
-            }
+            {content()}
+            {button()}
         </div>
     )
 }
