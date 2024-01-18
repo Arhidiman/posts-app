@@ -1,0 +1,10 @@
+.infinite-scroll-list {
+  overflow-y: auto;
+  position: relative;
+  width: 800px;
+  height: 90vh;
+  margin: 0 auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

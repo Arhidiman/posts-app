@@ -14,7 +14,6 @@ const postPageSlice = createSlice({
     initialState: initialState,
     reducers: {
         setPost: (state, action: PayloadAction<IPost | undefined>) => {
-            console.log('PAYLOAD:', action.payload)
             state.post = action.payload
         }
     }

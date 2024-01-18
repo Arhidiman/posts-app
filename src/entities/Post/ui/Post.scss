@@ -6,8 +6,11 @@
   gap: 40px;
   padding: 10px;
   min-width: 600px;
-  border: solid deepskyblue 2px;
-  border-radius: 5px;
+  border-bottom: solid deepskyblue 2px;
+  &.bordered {
+    border: solid deepskyblue 2px;
+    border-radius: 5px;
+  }
   &-content {
     &-info {
       display: flex;
@@ -20,6 +23,7 @@
     font-size: 20px;
   }
   &-title {
+    text-align: left;
     font-size: 20px;
     font-weight: bold;
   }

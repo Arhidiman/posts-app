@@ -1,8 +1,9 @@
 import React, {useEffect} from "react"
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux";
 import {setPost} from "@/pages/PostPage/store";
 import {useGetSinglePostQuery} from "@/shared/api/queries/postsApi.ts";
+import {Button} from "@/shared/ui/Button/Button.tsx";
 import {Post} from "@/entities/Post";
 import type {RootState} from "@/app/store";
 import './PostDetailPage.scss'
@@ -22,8 +23,14 @@ export const PostDetailPage: React.FC = () => {
     }, [data]);
 
     return (
-        <>
-            <h2>Детали поста номер {id}</h2>
+        <div className='post-detail-page'>
+
+            <div className='post-detail-page-header'>
+                <Link to='/'>
+                    <Button>Назад</Button>
+                </Link>
+                <h2>Детали поста номер {id}</h2>
+            </div>
             {
                 postPage.post &&
                 <Post
@@ -34,7 +41,7 @@ export const PostDetailPage: React.FC = () => {
                     body={postPage.post.body}
                 />
             }
-        </>
+        </div>
 
     );
 }

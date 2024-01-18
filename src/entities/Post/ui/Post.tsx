@@ -13,10 +13,11 @@ export const Post = (
         body,
         detailed,
         height
-    }: IPost & {detailed: boolean, height: number}
+    }: IPost & {detailed: boolean, height?: number}
 ) => {
 
     const postBodyClassname = `post-body ${detailed ? 'detailed' : ''}`
+    const postClassname = `post ${detailed ? 'bordered' : ''}`
 
     const button = () => {
         return (
@@ -42,7 +43,7 @@ export const Post = (
     }
 
     return (
-        <div key={id} className='post' style={{height: height}}>
+        <div key={id} className={postClassname} style={{height: height}}>
             {content()}
             {button()}
         </div>

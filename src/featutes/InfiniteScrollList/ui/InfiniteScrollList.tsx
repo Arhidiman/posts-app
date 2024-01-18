@@ -6,6 +6,7 @@ import {useGetAllPostsQuery} from "@/shared/api/queries/postsApi.ts";
 import {setPosts} from "@/featutes/InfiniteScrollList/store";
 import type {IPost} from "@/shared/types/types.ts";
 import type {RootState} from "@/app/store";
+import './InfiniteScrollList.scss'
 
 export const InfiniteScrollList: React.FC = () => {
 
@@ -19,7 +20,7 @@ export const InfiniteScrollList: React.FC = () => {
     const [startIndex, setStartIndex] = useState(0)
     const [endIndex, setEndIndex] = useState(startIndex + renderPostsNum)
 
-    const fetchMoreData = (isScrollDown?: boolean) => {
+    const fetchMoreData = (isScrollDown?: boolean, initialItems?: number) => {
         let newItems: IPost[] | undefined = undefined
         let newStartIndex = startIndex
         let newEndIndex = endIndex
@@ -27,45 +28,49 @@ export const InfiniteScrollList: React.FC = () => {
         if(isScrollDown && data) {
             newStartIndex = endIndex < data.length - 1 ? startIndex + 5 : endIndex - 10
             newEndIndex = endIndex <= data.length - 1 ? newStartIndex + renderPostsNum : data.length
-        } else {
+        }
+        if(!isScrollDown && data && !initialItems) {
             newStartIndex = startIndex - renderPostsNum > 0 ? startIndex - additionalItems : 0
             newEndIndex = newStartIndex > 0 ? endIndex - additionalItems : renderPostsNum
         }
+        if(data && infiniteScrollPosts.posts) {
+            newItems = data.slice(newStartIndex, newEndIndex)
+        }
+        if(initialItems && data && infiniteScrollPosts.posts ) {
+            newItems = data.slice(newStartIndex, initialItems)
+        }
         setStartIndex(newStartIndex)
         setEndIndex(newEndIndex)
-        if(data && infiniteScrollPosts.posts) {
-            newItems =  data.slice(newStartIndex, newEndIndex)
-        }
         dispatch(setPosts(newItems))
         setLoading(false);
-    };
+    }
 
     const handleScroll = _debounce((e: React.WheelEvent<HTMLDivElement>) => {
         const container = containerRef.current;
         if(container) {
             const isScrollDown = e.deltaY > 0
             const isCloseToListEnd = container.scrollTop + container.clientHeight >= container.scrollHeight - 100 && isScrollDown
-            const isCloseToListStart = container.scrollTop <= 100 && e.deltaY < 0 && !isScrollDown
+            const isCloseToListStart = container.scrollTop <= 200 && e.deltaY < 0 && !isScrollDown
             if((isCloseToListEnd || isCloseToListStart) && !loading) {
                 setLoading(true);
                 fetchMoreData(isScrollDown);
             }
         }
-    }, 100)
+    }, 200)
 
     useEffect(() => {
         const initialData = data && data.slice(0, renderPostsNum)
         dispatch(setPosts(initialData))
-    }, [data]);
+    },[data]);
 
     useEffect(() => {
-        fetchMoreData()
         let containerHeight = 0
         if (containerRef.current) containerHeight = containerRef.current.clientHeight
         const renderedPosts = Math.ceil(containerHeight/elemHeight) + 6
+        fetchMoreData(undefined, renderedPosts)
         setRenderPostsNum(renderedPosts)
         setEndIndex(renderedPosts)
-    }, []);
+    }, [])
 
     const post = (post: IPost) => {
         return <Post
@@ -81,22 +86,16 @@ export const InfiniteScrollList: React.FC = () => {
 
     return (
         <div
+            className='infinite-scroll-list'
             ref={containerRef}
-            style={{
-                width: '800px',
-                height: '90vh',
-                overflowY: 'auto',
-                position: 'relative',
-                border: 'solid black 3px'
-            }}
             onWheel={handleScroll}
         >
-            <div style={{ position: 'absolute', width: '100%' }}>
+            <div
+                className='infinite-scroll-list-container'
+                style={{ position: 'absolute', width: '100%' }}>
                 {infiniteScrollPosts.posts && infiniteScrollPosts.posts.map(post)}
                 {loading && <div>Loading...</div>}
             </div>
         </div>
-    );
-};
-
-export default InfiniteScrollList;
+    )
+}

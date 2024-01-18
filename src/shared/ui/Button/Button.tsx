@@ -1,3 +1,4 @@
+import React from "react";
 import {MouseEventHandler, ReactNode} from "react"
 import "./Button.scss"
 
