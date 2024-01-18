@@ -1,20 +1,8 @@
-import React, {useEffect} from "react"
-import {useGetAllPostsQuery} from "@/shared/api/queries/postsApi.ts";
+import React from "react"
 import {InfiniteScrollList} from "@/featutes/InfiniteScrollList";
 import './MainPage.scss'
 
-interface IMainPage {
-
-}
-
-export const MainPage: React.FC<IMainPage> = () => {
-
-    const {data} = useGetAllPostsQuery('')
-
-    useEffect(() => {
-        // dispatch(setPosts(data))
-    },[data]);
-
+export const MainPage: React.FC = () => {
 
     return (
        <div className='main-page'>

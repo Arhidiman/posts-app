@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import _debounce from 'lodash/debounce';
-
 import {Post} from "@/entities/Post";
 import {useSelector, useDispatch} from "react-redux";
 import {useGetAllPostsQuery} from "@/shared/api/queries/postsApi.ts";
@@ -15,7 +14,7 @@ export const InfiniteScrollList: React.FC = () => {
     const {infiniteScrollPosts} = useSelector((state: RootState) => state)
     const {data} = useGetAllPostsQuery('')
     const containerRef = useRef<HTMLDivElement>(null)
-    const [elemHeight] = useState(700)
+    const [elemHeight] = useState(100)
     const [renderPostsNum, setRenderPostsNum] = useState(0)
     const [startIndex, setStartIndex] = useState(0)
     const [endIndex, setEndIndex] = useState(startIndex + renderPostsNum)
@@ -24,12 +23,13 @@ export const InfiniteScrollList: React.FC = () => {
         let newItems: IPost[] | undefined = undefined
         let newStartIndex = startIndex
         let newEndIndex = endIndex
+        const additionalItems = Math.ceil(renderPostsNum/2)
         if(isScrollDown && data) {
             newStartIndex = endIndex < data.length - 1 ? startIndex + 5 : endIndex - 10
             newEndIndex = endIndex <= data.length - 1 ? newStartIndex + renderPostsNum : data.length
         } else {
-            newStartIndex = startIndex - renderPostsNum > 0 ? startIndex - 5 : 0
-            newEndIndex = newStartIndex > 0 ? endIndex - 5 : 10
+            newStartIndex = startIndex - renderPostsNum > 0 ? startIndex - additionalItems : 0
+            newEndIndex = newStartIndex > 0 ? endIndex - additionalItems : renderPostsNum
         }
         setStartIndex(newStartIndex)
         setEndIndex(newEndIndex)
@@ -40,7 +40,7 @@ export const InfiniteScrollList: React.FC = () => {
         setLoading(false);
     };
 
-    const handleScroll = _debounce((e: WheelEvent) => {
+    const handleScroll = _debounce((e: React.WheelEvent<HTMLDivElement>) => {
         const container = containerRef.current;
         if(container) {
             const isScrollDown = e.deltaY > 0
@@ -60,18 +60,18 @@ export const InfiniteScrollList: React.FC = () => {
 
     useEffect(() => {
         fetchMoreData()
-        const containerHeight = containerRef.current.clientHeight as number
+        let containerHeight = 0
+        if (containerRef.current) containerHeight = containerRef.current.clientHeight
         const renderedPosts = Math.ceil(containerHeight/elemHeight) + 6
-        console.log('rendered posts', renderedPosts)
         setRenderPostsNum(renderedPosts)
         setEndIndex(renderedPosts)
     }, []);
 
-    const post = (post: IPost, i: number) => {
+    const post = (post: IPost) => {
         return <Post
             key={post.id}
             id={post.id}
-            postNum={i + 1}
+            postNum={post.id}
             title={post.title}
             body={post.body}
             detailed={false}
@@ -84,7 +84,7 @@ export const InfiniteScrollList: React.FC = () => {
             ref={containerRef}
             style={{
                 width: '800px',
-                height: '600px',
+                height: '90vh',
                 overflowY: 'auto',
                 position: 'relative',
                 border: 'solid black 3px'
