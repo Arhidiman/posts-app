@@ -26,7 +26,7 @@ export const InfiniteScrollList: React.FC = () => {
         let newEndIndex = endIndex
         const additionalItems = Math.ceil(renderPostsNum/2)
         if(isScrollDown && data) {
-            newStartIndex = endIndex < data.length - 1 ? startIndex + 5 : endIndex - 10
+            newStartIndex = endIndex <= data.length - 1 ? startIndex + additionalItems : startIndex
             newEndIndex = endIndex <= data.length - 1 ? newStartIndex + renderPostsNum : data.length
         }
         if(!isScrollDown && data && !initialItems) {
@@ -49,14 +49,14 @@ export const InfiniteScrollList: React.FC = () => {
         const container = containerRef.current;
         if(container) {
             const isScrollDown = e.deltaY > 0
-            const isCloseToListEnd = container.scrollTop + container.clientHeight >= container.scrollHeight - 100 && isScrollDown
-            const isCloseToListStart = container.scrollTop <= 200 && e.deltaY < 0 && !isScrollDown
+            const isCloseToListEnd = container.scrollTop + container.clientHeight >= container.scrollHeight - 500 && isScrollDown
+            const isCloseToListStart = container.scrollTop <= 300 && e.deltaY < 0 && !isScrollDown
             if((isCloseToListEnd || isCloseToListStart) && !loading) {
                 setLoading(true);
                 fetchMoreData(isScrollDown);
             }
         }
-    }, 200)
+    }, 50)
 
     useEffect(() => {
         const initialData = data && data.slice(0, renderPostsNum)
